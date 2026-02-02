@@ -1,0 +1,20 @@
+import wixData from 'wix-data';
+
+/**
+  Fetches resources from the database.
+  Filters only for items marked as 'public'
+  @returns {Promise<Array>} - An alphabetized list of resources
+ */
+export async function getPublicResources() {
+    try {
+        const results = await wixData.query("Resources")
+            .eq("displayResource", true)
+            .ascending("title")
+            .find();
+            
+        return results.items;
+    } catch (error) {
+        console.error("Database query failed", error);
+        return [];
+    }
+}
