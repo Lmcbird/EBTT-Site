@@ -39,7 +39,6 @@ function setupRepeater(data) {
 				const downloadURL = itemData.file.split('?')[0] + "?download=true";
 				wixLocation.to(downloadURL);
 			});
-			$item("#downloadButton").link = itemData.file + "?download=true";
 			$item("#downloadButton").show();
 		}
 		else if (itemData.link) { // Data is a link to external site
