@@ -27,28 +27,19 @@ function setupRepeater(data) {
 	$w("#resourceRepeater").onItemReady(($item, itemData) => {
 		$item("#titleText").text = itemData.title; // Display resource title
 		$item("#descriptionText").html = itemData.description; // Display resource description
-		if (itemData.file) { // Data is a file
-			// Resource view button functionality
-			$item("#button2").label = "View PDF";
+		if (itemData.file) { // Data is a file: View PDF
+            $item("#button2").label = "Open Resource"; 
             $item("#button2").link = itemData.file;
-            $item("#button2").target = "_blank"; // Open in a new tab
+            $item("#button2").target = "_blank"; 
             $item("#button2").show();
-			// Resource download button functionality
-			$item("#downloadButton").label = "Download PDF";
-			$item("#downloadButton").onClick(() => {
-				const downloadURL = itemData.file.split('?')[0] + "?download=true";
-				wixLocation.to(downloadURL);
-			});
-			$item("#downloadButton").show();
-		}
+        }
 		else if (itemData.link) { // Data is a link to external site
 			$item("#button2").hide()
-			$item("#downloadButton").label = "Open Link";
-			$item("#downloadButton").link = itemData.link;
-			$item("#downloadButton").show();
+			$item("#button2").label = "Open Link";
+			$item("#button2").link = itemData.link;
+			$item("#button2").show();
 		} else {
 			$item("#button2").hide();
-			$item("#downloadButton").hide();
 		}
 	});
 
