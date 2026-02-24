@@ -34,6 +34,10 @@ function setupRepeater(data) {
             $item("#button2").show();
 			// Resource download button functionality
 			$item("#downloadButton").label = "Download PDF";
+			$item("#downloadButton").onClick(() => {
+				const downloadURL = itemData.file.split('?')[0] + "?download=true";
+				wixLocation.to(downloadURL);
+			});
 			$item("#downloadButton").link = itemData.file + "?download=true";
 			$item("#downloadButton").show();
 		}
