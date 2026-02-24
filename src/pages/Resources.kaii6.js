@@ -1,4 +1,5 @@
 import { getPublicResources } from 'backend/dataService.jsw'
+import wixLocation from 'wix-location';
 
 $w.onReady(async function () { // On page load
 	$w("#noDataMessage").collapse();
