@@ -11,6 +11,7 @@ $w.onReady(async function () {
         if (results.items.length > 0) {
             setupPartnersRepeater(results.items);
 			$w("#partnersRepeater").show();
+			console.log("partners loaded")
         } else { // Hide if empty
             $w("#noPartnersMessage").show();
         }
