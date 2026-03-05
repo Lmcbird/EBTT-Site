@@ -10,8 +10,9 @@ $w.onReady(async function () {
 
         if (results.items.length > 0) {
             setupPartnersRepeater(results.items);
+			$w("#partnersRepeater").show();
         } else { // Hide if empty
-            $w("#partnersRepeater").collapse();
+            $w("#noPartnersMessage").show();
         }
     } catch (err) {
         console.error("Partners fetch failed", err);
