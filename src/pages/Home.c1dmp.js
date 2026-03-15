@@ -1,10 +1,37 @@
-// API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-// “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
+import { authentication } from 'wix-members-frontend'
+import wixData from 'wix-data';
 
 $w.onReady(function () {
-    // Write your JavaScript here
+    $w("#signupButton").onClick(async () => {
+        $w("#signupButton").disable();
+        $w("#signupButton").label = "Processing...";
 
-    // To select an element by ID use: $w('#elementID')
+        const email = $w("#emailInput").value;
+        const name = $w("#nameInput").value;
+        const role = $w("#roleDropdown").value;
+        const contact = $w("#contactCheckbox").checked;
 
-    // Click 'Preview' to run your code
+        try {
+            await wixData.insert("Sign-ups", {
+                "fullName": name,
+                "email": email,
+                "role": role,
+                "contact": contact
+            });
+            await authentication.promptRegister({
+                contactInfo: {
+                    firstName: name,
+                    labels: [role] 
+                }
+            });
+
+            $w("#signupButton").label = "Success!";
+            
+        } catch (err) {
+            console.error("Signup failed:", err);
+            showError("Something went wrong. Please try again.");
+            $w("#signupButton").enable();
+            $w("#signupButton").label = "SIGN UP";
+        }
+    });
 });

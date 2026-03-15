@@ -1,4 +1,5 @@
 import { getPublicResources } from 'backend/dataService.jsw'
+import { currentMember } from 'wix-members-frontend';
 import wixLocation from 'wix-location';
 
 $w.onReady(async function () { // On page load
@@ -6,6 +7,7 @@ $w.onReady(async function () { // On page load
 	$w("#resourceRepeater").collapse();
 
 	try {
+		const userRole = await getUserRole();
 		const allResources = await getPublicResources();
 
 		if (allResources && allResources.length > 0) { // Data is present, populate resource repeater
@@ -22,6 +24,18 @@ $w.onReady(async function () { // On page load
 		$w("#noDataMessage").expand();
 	}
 });
+
+async function getUserRole() {
+	const member = await currentMember.getMember();
+	if (!member) return "Guest"; // User not logged in
+	const roles = await currentMember.getRoles();
+	const roleNames = roles.map(r => r.title);
+
+	if (roleNames.includes("Admin")) return "Admin";
+	if (roleNames.includes("Member")) return "Member";
+
+	return "Member";
+}
 
 function setupRepeater(data) {
 	$w("#resourceRepeater").onItemReady(($item, itemData) => {
