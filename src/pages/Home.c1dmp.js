@@ -11,6 +11,11 @@ $w.onReady(function () {
         const role = $w("#roleDropdown").value;
         const contact = $w("#contactCheckbox").checked;
 
+        if (!email || !name || !role) {
+            showError("Please fill out all fields before signing up.");
+            return;
+        }
+
         try {
             await wixData.insert("Signups", {
                 "fullName": name,
