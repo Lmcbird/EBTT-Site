@@ -21,9 +21,9 @@ $w.onReady(function () {
 // This helper function does the actual work in the database
 async function updateMemberStatus(id, newStatus) {
     try {
-        const item = await wixData.get("Sign-ups", id);
+        const item = await wixData.get("Signups", id);
         item.status = newStatus;
-        await wixData.update("Sign-ups", item);
+        await wixData.update("Signups", item);
         $w("#signupsDataset").refresh();
         
     } catch (err) {

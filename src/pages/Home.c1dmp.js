@@ -12,7 +12,7 @@ $w.onReady(function () {
         const contact = $w("#contactCheckbox").checked;
 
         try {
-            await wixData.insert("Sign-ups", {
+            await wixData.insert("Signups", {
                 "fullName": name,
                 "email": email,
                 "role": role,
