@@ -15,8 +15,8 @@ $w.onReady(function () {
             await wixData.insert("Signups", {
                 "fullName": name,
                 "email": email,
-                "role": role,
-                "status": "Pending",
+                "role": [role],
+                "status": ["Pending"],
                 "contact": contact
             });
             await authentication.promptLogin({ mode: "signup" });
