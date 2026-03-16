@@ -16,6 +16,7 @@ $w.onReady(function () {
                 "fullName": name,
                 "email": email,
                 "role": role,
+                "status": "Pending",
                 "contact": contact
             });
             await authentication.promptLogin({ mode: "signup" });
