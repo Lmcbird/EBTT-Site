@@ -18,12 +18,7 @@ $w.onReady(function () {
                 "role": role,
                 "contact": contact
             });
-            await authentication.promptRegister({
-                contactInfo: {
-                    firstName: name,
-                    labels: [role] 
-                }
-            });
+            await authentication.promptLogin({ mode: "signup" });
 
             $w("#signupButton").label = "Success!";
             
