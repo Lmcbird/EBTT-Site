@@ -7,13 +7,13 @@ $w.onReady(function () {
         // APPROVE BUTTON
         $item("#approveButton").onClick(async () => {
             $item("#approveButton").label = "...";
-            await updateMemberStatus(itemData._id, "Approved");
+            await updateMemberStatus(itemData._id, ["Approved"]);
         });
 
         // REJECT BUTTON
         $item("#rejectButton").onClick(async () => {
             $item("#rejectButton").label = "...";
-            await updateMemberStatus(itemData._id, "Rejected");
+            await updateMemberStatus(itemData._id, ["Rejected"]);
         });
     });
 });
