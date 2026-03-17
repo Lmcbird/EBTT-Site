@@ -1,4 +1,4 @@
-import { members } from 'wix-members-backend';
+import { members } from 'wix-members.v2';
 
 export async function approveMemberInWix(email) {
     try {
@@ -9,8 +9,13 @@ export async function approveMemberInWix(email) {
 
         if (queryResults.items.length > 0) {
             const memberId = queryResults.items[0]._id;
-            // Officially approve them in the Wix System
-            return await members.approveByToken(memberId);
+            await members.approveMember(memberId);
+            
+            console.log(`Member with email ${email} officially approved.`);
+            return { success: true };
+        } else {
+            console.log("No member found with that email.");
+            return { success: false, error: "Member not found" };
         }
     } catch (error) {
         console.error("Wix System Approval Failed", error);
