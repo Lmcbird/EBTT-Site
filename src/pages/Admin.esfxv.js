@@ -8,6 +8,8 @@ $w.onReady(function () {
         $item("#approveButton").onClick(async () => {
             $item("#approveButton").label = "...";
             await updateMemberStatus(itemData._id, ["Approved"]);
+            await approveMemberInWix(itemData.email);
+            $w("signupsDataset").refresh();
         });
 
         // REJECT BUTTON

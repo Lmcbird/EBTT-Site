@@ -1,0 +1,18 @@
+import { members } from 'wix-members-backend';
+
+export async function approveMemberInWix(email) {
+    try {
+        // Find the member by email
+        const queryResults = await members.queryMembers()
+            .eq("loginEmail", email)
+            .find();
+
+        if (queryResults.items.length > 0) {
+            const memberId = queryResults.items[0]._id;
+            // Officially approve them in the Wix System
+            return await members.approveByToken(memberId);
+        }
+    } catch (error) {
+        console.error("Wix System Approval Failed", error);
+    }
+}
