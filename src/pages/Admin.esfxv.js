@@ -1,4 +1,5 @@
 import wixData from 'wix-data';
+import { approveMemberInWix } from 'backend/memberActions.jsw'
 
 $w.onReady(function () {
     // This tells the repeater: "Every time a row loads, prepare the buttons"
