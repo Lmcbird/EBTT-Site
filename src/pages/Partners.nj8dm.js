@@ -12,7 +12,7 @@ $w.onReady(async function () {
             setupPartnersRepeater(results.items);
 			$w("#partnersRepeater").expand();
 			console.log("partners loaded")
-        } else { // Hide if empty
+        } else { // Hide if empty3
             $w("#noPartnersMessage").expand();
         }
     } catch (err) {
