@@ -15,7 +15,15 @@ $w.onReady(function () {
         const location = $w("#eventLocationInput").value;
         const contactName = $w("#contactNameInput").value;
         const contactEmail = $w("#contactEmailInput").value;
-        const externalLink = $w("#eventLinkInput").value;
+
+        // Add this temporarily
+        console.log("title:", title);
+        console.log("description:", description);
+        console.log("date:", date);
+        console.log("time:", time);
+        console.log("location:", location);
+        console.log("contactName:", contactName);
+        console.log("contactEmail:", contactEmail);
 
         // Validation
         if (!title || !description || !date || !time || !location || !contactName || !contactEmail) {
@@ -47,7 +55,7 @@ $w.onReady(function () {
 
             if (!result.success) {
                 showMessage("Submission failed. Please try again or contact us directly.");
-                $w("#submitEventButton").enable();
+                $w("#submitEventButton").enable();x
                 $w("#submitEventButton").label = "Submit Event Request";
                 return;
             }
