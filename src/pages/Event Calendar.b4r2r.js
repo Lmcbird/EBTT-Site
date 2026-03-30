@@ -16,11 +16,11 @@ $w.onReady(async function () {
 
     // submit buttons
     $w("#submitEventButton1").onClick(() => {
-        wixLocation.to("/event-submission");
+        wixLocation.to("/event-calendar/event-submission");
     });
 
     $w("#submitEventButton2").onClick(() => {
-        wixLocation.to("/event-submission");
+        wixLocation.to("/event-calendar/event-submission");
     });
 
     try {
