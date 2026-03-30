@@ -1,0 +1,30 @@
+import { triggeredEmails } from 'wix-crm-backend';
+import { getSecret } from 'wix-secrets-backend';
+
+const ADMIN_EMAIL = "connellyl@duq.edu"
+const EMAIL_ID = "eventSubmissionAlert";
+
+export async function sendApprovalEmail(eventData, eventId) {
+    try {
+        // Build the approve link pointing to your approval page
+        const approveLink = `https://connellyl4.wixstudio.com/my-site-2/approve-event?id=${eventId}`;
+
+        await triggeredEmails.emailContact(EMAIL_ID, ADMIN_EMAIL, {
+            variables: {
+                eventName: eventData.title,
+                eventDate: new Date(eventData.eventDate).toLocaleDateString("en-US", {
+                    weekday: "long", year: "numeric", month: "long", day: "numeric"
+                }),
+                eventLocation: eventData.location,
+                contactName: eventData.contactName,
+                contactEmail: eventData.contactEmail,
+                approveLink: approveLink
+            }
+        });
+
+        return { success: true };
+    } catch (error) {
+        console.error("Email send failed:", error);
+        return { success: false, error: error.message };
+    }
+}
