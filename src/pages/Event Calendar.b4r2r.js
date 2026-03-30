@@ -1,5 +1,5 @@
 import { getApprovedEvents } from 'backend/dataService.jsw';
-import { getAllApprovedEvents } from '../backend/dataService.jsw';
+import { getAllApprovedEvents } from 'backend/dataService.jsw';
 import wixLocation from 'wix-location';
 
 let allEvents = [];
