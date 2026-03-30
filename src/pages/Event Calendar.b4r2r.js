@@ -14,8 +14,12 @@ $w.onReady(async function () {
     $w("#filterThisMonth").onClick(() => setFilter("thismonth"));
     $w("#filterPast").onClick(() => setFilter("past"));
 
-    // submit button
+    // submit buttons
     $w("#submitEventButton1").onClick(() => {
+        wixLocation.to("/event-submission");
+    });
+
+    $w("#submitEventButton2").onClick(() => {
         wixLocation.to("/event-submission");
     });
 
