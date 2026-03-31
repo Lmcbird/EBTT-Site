@@ -1,4 +1,4 @@
-import { triggeredEmails } from 'wix-crm-backend';
+import { triggeredEmails, contacts } from 'wix-crm-backend';
 import { getSecret } from 'wix-secrets-backend';
 
 const ADMIN_EMAIL = "connellyl@duq.edu"
@@ -6,10 +6,22 @@ const EMAIL_ID = "eventSubmissionAlert";
 
 export async function sendApprovalEmail(eventData, eventId) {
     try {
+
+        const contactSearchResult = await contacts.queryContacts()
+            .eq("info.emails.email", ADMIN_EMAIL)
+            .find();
+
+        if (contactSearchResult.items.length === 0) {
+            console.error(`Contact not found for email: ${ADMIN_EMAIL}`);
+            return { success: false, error: "Admin contact not found in CRM." };
+        }
+
+        const contactId = contactSearchResult.items[0]._id;
+
         // Build the approve link pointing to your approval page
         const approveLink = `https://connellyl4.wixstudio.com/my-site-2/approve-event?id=${eventId}`;
 
-        await triggeredEmails.emailContact(EMAIL_ID, ADMIN_EMAIL, {
+        await triggeredEmails.emailContact(EMAIL_ID, contactId, {
             variables: {
                 eventName: eventData.title,
                 eventDate: new Date(eventData.eventDate).toLocaleDateString("en-US", {
