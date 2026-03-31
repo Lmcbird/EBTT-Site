@@ -93,7 +93,7 @@ function setupRepeater() {
 
         // Event details
         $item("#eventTitle").text = itemData.title || "";
-        $item("#eventDescription").text = itemData.description || "";
+        $item("#eventDescription").html = itemData.description || "";
 
         // Time — format nicely from the date
         $item("#eventTime").text = date.toLocaleString("en-US", {
