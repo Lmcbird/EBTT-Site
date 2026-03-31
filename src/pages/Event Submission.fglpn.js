@@ -56,7 +56,7 @@ $w.onReady(function () {
 
             if (!result.success) {
                 showMessage("Submission failed. Please try again or contact us directly.");
-                $w("#submitEventButton").enable();x
+                $w("#submitEventButton").enable();
                 $w("#submitEventButton").label = "Submit Event Request";
                 return;
             }
