@@ -1,7 +1,7 @@
 import { triggeredEmails } from 'wix-crm-backend';
 
 const ADMIN_CONTACT_ID = "0eaf305d-5f71-4aba-a130-93bc5f0e6545";
-const EMAIL_ID = "eventSubmissionAlert";
+const EMAIL_ID = "VFSqIAF";
 
 export async function sendApprovalEmail(eventData, eventId) {
     try {
@@ -20,7 +20,9 @@ export async function sendApprovalEmail(eventData, eventId) {
             }
         });
 
+        console.log("Approval email sent successfully");
         return { success: true };
+
     } catch (error) {
         console.error("Email send failed:", error);
         return { success: false, error: error.message };
