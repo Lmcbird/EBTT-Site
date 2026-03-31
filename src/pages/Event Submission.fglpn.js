@@ -15,6 +15,7 @@ $w.onReady(function () {
         const location = $w("#eventLocationInput").value;
         const contactName = $w("#contactNameInput").value;
         const contactEmail = $w("#contactEmailInput").value;
+        const externalLink = $w("#eventLinkInput").value;
 
         // Add this temporarily
         console.log("title:", title);
