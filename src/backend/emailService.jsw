@@ -1,26 +1,13 @@
-import { triggeredEmails } from 'wix-members-backend';
-import { members } from 'wix-members-backend'; 
+import { triggeredEmails } from 'wix-crm-backend';
 
-const ADMIN_EMAIL = "connellyl@duq.edu";
+const ADMIN_CONTACT_ID = "0eaf305d-5f71-4aba-a130-93bc5f0e6545";
 const EMAIL_ID = "eventSubmissionAlert";
 
 export async function sendApprovalEmail(eventData, eventId) {
     try {
-        // Use the members.queryMembers() method correctly
-        const memberSearchResult = await members.queryMembers()
-            .eq("loginEmail", ADMIN_EMAIL)
-            .find();
+        const approveLink = `https://connellyl4.wixstudio.com/ebtt/approve-event?id=${eventId}`;
 
-        if (memberSearchResult.items.length === 0) {
-            console.error(`Member not found for email: ${ADMIN_EMAIL}`);
-            return { success: false, error: "Admin member not found." };
-        }
-
-        const memberId = memberSearchResult.items[0]._id;
-        const approveLink = `https://connellyl4.wixstudio.com/my-site-2/approve-event?id=${eventId}`;
-
-        // Trigger the email
-        await triggeredEmails.emailMember(EMAIL_ID, memberId, {
+        await triggeredEmails.emailContact(EMAIL_ID, ADMIN_CONTACT_ID, {
             variables: {
                 eventName: eventData.title,
                 eventDate: new Date(eventData.eventDate).toLocaleDateString("en-US", {
@@ -34,7 +21,6 @@ export async function sendApprovalEmail(eventData, eventId) {
         });
 
         return { success: true };
-
     } catch (error) {
         console.error("Email send failed:", error);
         return { success: false, error: error.message };
