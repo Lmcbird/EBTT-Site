@@ -1,22 +1,25 @@
-import { triggeredEmails, members } from 'wix-members-backend';
+import { triggeredEmails } from 'wix-members-backend';
+import { members } from 'wix-members-backend'; 
 
 const ADMIN_EMAIL = "connellyl@duq.edu";
 const EMAIL_ID = "eventSubmissionAlert";
 
 export async function sendApprovalEmail(eventData, eventId) {
     try {
+        // Use the members.queryMembers() method correctly
         const memberSearchResult = await members.queryMembers()
             .eq("loginEmail", ADMIN_EMAIL)
             .find();
 
         if (memberSearchResult.items.length === 0) {
-            console.error(`Member not found for email: ${ADMIN_EMAIL}. Make sure you are a registered Site Member.`);
+            console.error(`Member not found for email: ${ADMIN_EMAIL}`);
             return { success: false, error: "Admin member not found." };
         }
 
         const memberId = memberSearchResult.items[0]._id;
         const approveLink = `https://connellyl4.wixstudio.com/my-site-2/approve-event?id=${eventId}`;
 
+        // Trigger the email
         await triggeredEmails.emailMember(EMAIL_ID, memberId, {
             variables: {
                 eventName: eventData.title,
