@@ -113,7 +113,7 @@ function setupRepeater(data) {
                 "External": { color: "#1a4a4a", bg: "#e8f5f5" }
             };
 
-            const tagHTML = `<div style="display: flex; flex-wrap: wrap; gap: 5px;">` +
+            const tagHTML = `<div style="display: flex; flex-wrap: wrap; gap: 8px;">` +
                 tags.map(tag => {
                     const s = styles[tag] || { color: "#444444", bg: "#e8e8e8" };
                     return `<span style="
