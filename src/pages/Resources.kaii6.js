@@ -31,7 +31,7 @@ $w.onReady(async function () {
 
 function populateCategories(data) {
     const categories = [...new Set(
-        data.map(r => r.category).filter(Boolean)
+        data.flatMap(r => Array.isArray(r.category) ? r.category : [])
     )].sort();
 
     $w("#categoryDropdown").options = [
@@ -58,7 +58,10 @@ function applyFilters() {
         const matchesSearch = !query ||
             item.title?.toLowerCase().includes(query) ||
             item.description?.toLowerCase().includes(query);
-        const matchesCategory = !category || item.category === category;
+
+        const matchesCategory = !category || 
+            (Array.isArray(item.category) && item.category.includes(category));
+
         return matchesSearch && matchesCategory;
     });
 
@@ -98,19 +101,35 @@ function setupRepeater(data) {
         $item("#titleText").text = itemData.title || "";
         $item("#descriptionText").html = itemData.description || "";
 
-        if (itemData.category) {
-            $item("#categoryTag").text = itemData.category;
-    
+        if (itemData.category && itemData.category.length > 0) {
+            const tags = Array.isArray(itemData.category) ? itemData.category : [];
+            
             const styles = {
                 "Essay":    { color: "#1a2e5a", bg: "#e8f0ff" },
                 "Article":  { color: "#5a3a00", bg: "#fef3d8" },
                 "Pamphlet": { color: "#2a5a2a", bg: "#e8f5e8" },
-                "PDF":      { color: "#6b1414", bg: "#fde8e8" }
+                "PDF":      { color: "#6b1414", bg: "#fde8e8" },
+                "Video":    { color: "#4a1a5a", bg: "#f5e8ff" },
+                "External": { color: "#1a4a4a", bg: "#e8f5f5" }
             };
 
-            const s = styles[itemData.category] || { color: "#555555", bg: "#eeeeee" };
-            $item("#categoryTag").style.color = s.color;
-            $item("#category").style.backgroundColor = s.bg;
+            const tagHTML = tags.map(tag => {
+                const s = styles[tag] || { color: "#444444", bg: "#e8e8e8" }; // default fallback
+                return `<span style="
+                    display: inline-block;
+                    font-size: 11px;
+                    font-weight: 600;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
+                    color: ${s.color};
+                    background: ${s.bg};
+                    border-radius: 3px;
+                    padding: 3px 8px;
+                    margin-right: 5px;
+                ">${tag}</span>`;
+            }).join("");
+
+            $item("#categoryTag").html = tagHTML;
             $item("#category").show();
         } else {
             $item("#category").hide();
