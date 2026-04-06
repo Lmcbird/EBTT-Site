@@ -1,5 +1,4 @@
-import { getPublicResources, searchResources } from 'backend/dataService.jsw';
-import { currentMember } from 'wix-members-frontend';
+import { getPublicResources } from 'backend/dataService.jsw';
 
 let allResources = [];
 
@@ -126,6 +125,7 @@ function setupRepeater(data) {
                         background: ${s.bg};
                         border-radius: 3px;
                         padding: 3px 8px;
+                        margin-right: 8px;
                     ">${tag}</span>`;
                 }).join("") +
             `</div>`;
