@@ -127,7 +127,7 @@ function setupRepeater(data) {
                         padding: 3px 8px;
                         margin-right: 8px;
                     ">${tag}</span>`;
-                }).join("&nbsp;&nbsp;") +
+                }).join("&nbsp;") +
             `</div>`;
 
             $item("#categoryTag").html = tagHTML;
