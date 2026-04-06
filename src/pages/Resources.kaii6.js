@@ -34,10 +34,11 @@ function populateCategories(data) {
     )].sort();
 
     $w("#categoryDropdown").options = [
-        { label: "All Categories", value: "" },
+        { label: "All Resources", value: "" },
         ...categories.map(c => ({ label: c, value: c }))
     ];
     $w("#categoryDropdown").value = "";
+    $w("#categoryDropdown").placeholder = "All Resources";
 
     $w("#sortDropdown").options = [
         { label: "A → Z", value: "az" },
@@ -108,8 +109,7 @@ function setupRepeater(data) {
                 "Article":  { color: "#5a3a00", bg: "#fef3d8" },
                 "Pamphlet": { color: "#2a5a2a", bg: "#e8f5e8" },
                 "PDF":      { color: "#6b1414", bg: "#fde8e8" },
-                "Video":    { color: "#4a1a5a", bg: "#f5e8ff" },
-                "External": { color: "#1a4a4a", bg: "#e8f5f5" }
+                "Academic": { color: "#2a3a5a", bg: "#eef0ff" }
             };
 
             const tagHTML = `<div style="display: flex; flex-wrap: wrap; gap: 8px;">` +
@@ -127,7 +127,7 @@ function setupRepeater(data) {
                         padding: 3px 8px;
                         margin-right: 8px;
                     ">${tag}</span>`;
-                }).join("") +
+                }).join("&nbsp;&nbsp;") +
             `</div>`;
 
             $item("#categoryTag").html = tagHTML;
