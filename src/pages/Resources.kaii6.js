@@ -1,7 +1,7 @@
 import { getPublicResources, searchResources } from 'backend/dataService.jsw';
 import { currentMember } from 'wix-members-frontend';
 
-let allResources = []; // Cache the full list for client-side filtering
+let allResources = [];
 
 $w.onReady(async function () {
     $w("#noDataMessage").collapse();
@@ -11,8 +11,9 @@ $w.onReady(async function () {
         allResources = await getPublicResources();
 
         if (allResources.length > 0) {
-            $w("#resourceRepeater").expand();
+            populateCategories(allResources);
             setupRepeater(allResources);
+            $w("#resourceRepeater").expand();
         } else {
             $w("#noDataMessage").expand();
         }
@@ -22,30 +23,67 @@ $w.onReady(async function () {
         $w("#noDataMessage").expand();
     }
 
-    // Search input handler — filters the cached list as the user types
-    $w("#searchInput").onInput(() => {
-        const query = $w("#searchInput").value.trim().toLowerCase();
-
-        if (!query) {
-            // Empty search: restore full list
-            updateRepeater(allResources);
-            return;
-        }
-
-        const filtered = allResources.filter(item => {
-            const inTitle = item.title?.toLowerCase().includes(query);
-            const inDescription = item.description?.toLowerCase().includes(query);
-            return inTitle || inDescription;
-        });
-
-        updateRepeater(filtered);
-    });
+    
+    $w("#searchInput").onInput(() => applyFilters());
+    $w("#categoryDropdown").onChange(() => applyFilters());
+    $w("#sortDropdown").onChange(() => applyFilters());
 });
+
+function populateCategories(data) {
+    const categories = [...new Set(
+        data.map(r => r.category).filter(Boolean)
+    )].sort();
+
+    $w("#categoryDropdown").options = [
+        { label: "All Categories", value: "" },
+        ...categories.map(c => ({ label: c, value: c }))
+    ];
+    $w("#categoryDropdown").value = "";
+
+    $w("#sortDropdown").options = [
+        { label: "A → Z", value: "az" },
+        { label: "Z → A", value: "za" },
+        { label: "Newest first", value: "newest" },
+        { label: "Oldest first", value: "oldest" }
+    ];
+    $w("#sortDropdown").value = "az";
+}
+
+function applyFilters() {
+    const query = $w("#searchInput").value.trim().toLowerCase();
+    const category = $w("#categoryDropdown").value;
+    const sort = $w("#sortDropdown").value;
+
+    let filtered = allResources.filter(item => {
+        const matchesSearch = !query ||
+            item.title?.toLowerCase().includes(query) ||
+            item.description?.toLowerCase().includes(query);
+        const matchesCategory = !category || item.category === category;
+        return matchesSearch && matchesCategory;
+    });
+
+    filtered = sortResources(filtered, sort);
+    updateRepeater(filtered);
+}
+
+function sortResources(data, sort) {
+    switch (sort) {
+        case "az":
+            return [...data].sort((a, b) => a.title.localeCompare(b.title));
+        case "za":
+            return [...data].sort((a, b) => b.title.localeCompare(a.title));
+        case "newest":
+            return [...data].sort((a, b) => new Date(b._createdDate) - new Date(a._createdDate));
+        case "oldest":
+            return [...data].sort((a, b) => new Date(a._createdDate) - new Date(b._createdDate));
+        default:
+            return data;
+    }
+}
 
 function updateRepeater(data) {
     if (data.length === 0) {
         $w("#resourceRepeater").collapse();
-        $w("#noDataMessage").text = "No resources match your search.";
         $w("#noDataMessage").expand();
     } else {
         $w("#noDataMessage").collapse();
@@ -56,16 +94,25 @@ function updateRepeater(data) {
 
 function setupRepeater(data) {
     $w("#resourceRepeater").onItemReady(($item, itemData) => {
-        $item("#titleText").text = itemData.title;
-        $item("#descriptionText").html = itemData.description;
+
+        $item("#titleText").text = itemData.title || "";
+        $item("#descriptionText").html = itemData.description || "";
+
+        if (itemData.category) {
+            $item("#categoryTag").text = itemData.category;
+            $item("#categoryTag").style.color = getCategoryColor(itemData.category);
+            $item("#categoryTag").show();
+        } else {
+            $item("#categoryTag").hide();
+        }
 
         if (itemData.file) {
-            $item("#button2").label = "Open Resource";
+            $item("#button2").label = "Open →";
             $item("#button2").link = itemData.file;
             $item("#button2").target = "_blank";
             $item("#button2").show();
         } else if (itemData.link) {
-            $item("#button2").label = "Open Link";
+            $item("#button2").label = "Open →";
             $item("#button2").link = itemData.link;
             $item("#button2").target = "_blank";
             $item("#button2").show();
