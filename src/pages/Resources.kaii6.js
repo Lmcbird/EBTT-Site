@@ -100,10 +100,20 @@ function setupRepeater(data) {
 
         if (itemData.category) {
             $item("#categoryTag").text = itemData.category;
-            $item("#categoryTag").style.color = getCategoryColor(itemData.category);
-            $item("#categoryTag").show();
+    
+            const styles = {
+                "Essay":    { color: "#1a2e5a", bg: "#e8f0ff" },
+                "Article":  { color: "#5a3a00", bg: "#fef3d8" },
+                "Pamphlet": { color: "#2a5a2a", bg: "#e8f5e8" },
+                "PDF":      { color: "#6b1414", bg: "#fde8e8" }
+            };
+
+            const s = styles[itemData.category] || { color: "#555555", bg: "#eeeeee" };
+            $item("#categoryTag").style.color = s.color;
+            $item("#category").style.backgroundColor = s.bg;
+            $item("#category").show();
         } else {
-            $item("#categoryTag").hide();
+            $item("#category").hide();
         }
 
         if (itemData.file) {
