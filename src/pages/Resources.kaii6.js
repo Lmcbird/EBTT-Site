@@ -113,21 +113,22 @@ function setupRepeater(data) {
                 "External": { color: "#1a4a4a", bg: "#e8f5f5" }
             };
 
-            const tagHTML = tags.map(tag => {
-                const s = styles[tag] || { color: "#444444", bg: "#e8e8e8" }; // default fallback
-                return `<span style="
-                    display: inline-block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    letter-spacing: 0.06em;
-                    text-transform: uppercase;
-                    color: ${s.color};
-                    background: ${s.bg};
-                    border-radius: 3px;
-                    padding: 3px 8px;
-                    margin-right: 5px;
-                ">${tag}</span>`;
-            }).join("");
+            const tagHTML = `<div style="display: flex; flex-wrap: wrap; gap: 5px;">` +
+                tags.map(tag => {
+                    const s = styles[tag] || { color: "#444444", bg: "#e8e8e8" };
+                    return `<span style="
+                        display: inline-block;
+                        font-size: 11px;
+                        font-weight: 600;
+                        letter-spacing: 0.06em;
+                        text-transform: uppercase;
+                        color: ${s.color};
+                        background: ${s.bg};
+                        border-radius: 3px;
+                        padding: 3px 8px;
+                    ">${tag}</span>`;
+                }).join("") +
+            `</div>`;
 
             $item("#categoryTag").html = tagHTML;
             $item("#category").show();
