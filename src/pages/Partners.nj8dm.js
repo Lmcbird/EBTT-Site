@@ -1,7 +1,6 @@
 import wixData from 'wix-data';
 
 $w.onReady(async function () {
-    $w("#noPartnersMessage").collapse();
     $w("#partnersRepeater").collapse();
 
     try {
@@ -13,12 +12,10 @@ $w.onReady(async function () {
         if (results.items.length > 0) {
             setupPartnersRepeater(results.items);
             $w("#partnersRepeater").expand();
-        } else {
-            $w("#noPartnersMessage").expand();
         }
+
     } catch (err) {
         console.error("Partners fetch failed", err);
-        $w("#noPartnersMessage").expand();
     }
 });
 
@@ -34,10 +31,11 @@ function setupPartnersRepeater(data) {
             $item("#partnerDescription").hide();
         }
 
-        if (itemData.logo) {
-            $item("#partnerLogo").src = itemData.logo;
-            $item("#partnerLogo").tooltip = itemData.title;
-        }
+        // Include partner logo - uncomment if necessary
+        // if (itemData.logo) {
+        //     $item("#partnerLogo").src = itemData.logo;
+        //     $item("#partnerLogo").tooltip = itemData.title;
+        // }
 
         if (itemData.website) {
             $item("#partnerWebsite").label = "Visit Website →";
