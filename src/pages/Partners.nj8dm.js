@@ -38,8 +38,11 @@ function setupPartnersRepeater(data) {
         // }
 
         if (itemData.website) {
+            const rawUrl = itemData.website;
+            const formattedUrl = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
+
             $item("#partnerWebsite").label = "Visit →";
-            $item("#partnerWebsite").link = itemData.website;
+            $item("#partnerWebsite").link = formattedUrl;
             $item("#partnerWebsite").target = "_blank";
             $item("#partnerWebsite").expand();
         } else {
