@@ -39,8 +39,6 @@ function setupPartnersRepeater(data) {
 
         if (itemData.website) {
             $item("#partnerWebsite").label = "Visit Website →";
-            $item("#partnerWebsite").link = itemData.website;
-            $item("#partnerWebsite").target = "_blank";
             $item("#partnerWebsite").show();
         } else {
             $item("#partnerWebsite").hide();
