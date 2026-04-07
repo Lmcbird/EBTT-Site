@@ -26,9 +26,9 @@ function setupPartnersRepeater(data) {
 
         if (itemData.description) {
             $item("#partnerDescription").text = itemData.description;
-            $item("#partnerDescription").show();
+            $item("#partnerDescription").expand();
         } else {
-            $item("#partnerDescription").hide();
+            $item("#partnerDescription").collapse();
         }
 
         // Include partner logo - uncomment if necessary
@@ -38,10 +38,12 @@ function setupPartnersRepeater(data) {
         // }
 
         if (itemData.website) {
-            $item("#partnerWebsite").label = "Visit Website →";
-            $item("#partnerWebsite").show();
+            $item("#partnerWebsite").label = "Visit →";
+            $item("#partnerWebsite").link = itemData.website;
+            $item("#partnerWebsite").target = "_blank";
+            $item("#partnerWebsite").expand();
         } else {
-            $item("#partnerWebsite").hide();
+            $item("#partnerWebsite").collapse();
         }
     });
 
