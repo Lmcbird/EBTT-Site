@@ -23,11 +23,14 @@ function setupMemberRepeater(data) {
             $item("#memberName").text = itemData.name || "";
         }
         if (itemData.bio) {
-            $item("#memberBio").text = itemData.bio;
+            $item("#memberBio").html = itemData.bio;
             $item("#memberBio").expand();
         } else {
             $item("#memberBio").collapse();
         }
+		if (itemData.title) {
+			$item("#memberTitle").text = itemData.title || "";
+		}
         if (itemData.image) {
             $item("#memberPhoto").src = itemData.image;
             $item("#memberPhoto").tooltip = itemData.name;
