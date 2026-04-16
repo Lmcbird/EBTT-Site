@@ -3,13 +3,13 @@ import wixData from 'wix-data';
 $w.onReady(async function () {
 	$w("#memberRepeater").collapse();
 	try {
-		const results = await wixData.query("Partners")
+		const results = await wixData.query("Bios")
 					.eq("displayOnSite", true)
 					.ascending("name")
 					.find();
 		if (results.items.length > 0) {
             setupMemberRepeater(results.items);
-            $w("#partnersRepeater").expand();
+            $w("#memberRepeater").expand();
         }
 	} catch (err) {
         console.error("Fetch failed", err);
