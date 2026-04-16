@@ -15,9 +15,6 @@ $w.onReady(async function () {
     $w("#filterPast").onClick(() => setFilter("past"));
 
     // submit buttons
-    $w("#submitEventButton1").onClick(() => {
-        wixLocation.to("/event-calendar/event-submission");
-    });
 
     $w("#submitEventButton2").onClick(() => {
         wixLocation.to("/event-calendar/event-submission");
