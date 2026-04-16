@@ -29,7 +29,7 @@ function setupMemberRepeater(data) {
             $item("#memberBio").collapse();
         }
 		if (itemData.title) {
-			$item("#memberTitle").text = itemData.title || "";
+			$item("#memberTitle").text = itemData.title.toUpperCase() || "";
 		}
         if (itemData.image) {
             $item("#memberPhoto").src = itemData.image;
