@@ -27,7 +27,7 @@ function setupMemberRepeater(data) {
         } else {
             $item("#memberBio").collapse();
         }
-        if (itemData.logo) {
+        if (itemData.image) {
 			$item("#memberPhoto").src = itemData.image;
             $item("#memberPhoto").tooltip = itemData.name;
         }
