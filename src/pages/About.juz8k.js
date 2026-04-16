@@ -4,7 +4,6 @@ $w.onReady(async function () {
     $w("#memberRepeater").collapse();
     try {
         const results = await wixData.query("Bios")
-                    .eq("displayOnSite", true)
                     .ascending("name")
                     .find();
         console.log("Query results:", results.items.length, "| First item:", JSON.stringify(results.items[0]));
