@@ -92,12 +92,30 @@ function setupRepeater() {
         $item("#eventTitle").text = itemData.title || "";
         $item("#eventDescription").html = itemData.description || "";
 
+        const startLabel = date.toLocaleString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+        });
+
         // Time — format nicely from the date
         $item("#eventTime").text = date.toLocaleString("en-US", {
             hour: "numeric",
             minute: "2-digit",
             hour12: true
         });
+
+        if (itemData.eventEndTime) {
+            const endDate = new Date(itemData.eventEndTime);
+            const endLabel = endDate.toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true
+            });
+            $item("#eventTime").text = `${startLabel} - ${endLabel}`;
+        } else {
+            $item("eventTime").text = startLabel
+        }
 
         // Location
         $item("#eventLocation").text = itemData.location || "";

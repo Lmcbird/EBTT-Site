@@ -11,7 +11,8 @@ $w.onReady(function () {
         const title = $w("#eventNameInput").value;
         const description = $w("#eventDescInput").value;
         const date = $w("#eventDateInput").value;
-        const time = $w("#eventTimeInput").value;
+        const startTime = $w("#eventStartTimeInput").value;
+        const endTime = $w("#eventEndTimeInput").value;
         const location = $w("#eventLocationInput").value;
         const contactName = $w("#contactNameInput").value;
         const contactEmail = $w("#contactEmailInput").value;
@@ -27,7 +28,7 @@ $w.onReady(function () {
         console.log("contactEmail:", contactEmail);
 
         // Validation
-        if (!title || !description || !date || !time || !location || !contactName || !contactEmail) {
+        if (!title || !description || !date || !startTime || !endTime || !location || !contactName || !contactEmail) {
             showMessage("Please fill out all required fields.");
             $w("#submitEventButton").enable();
             $w("#submitEventButton").label = "Submit Event Request";
@@ -44,7 +45,8 @@ $w.onReady(function () {
         const eventData = {
             title,
             description,
-            eventDate: `${date}T${time}`,
+            eventDate: `${date}T${startTime}`,
+            eventEndTime: `${date}T${endTime}`,
             location,
             contactName,
             contactEmail,
