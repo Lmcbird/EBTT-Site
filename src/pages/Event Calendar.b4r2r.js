@@ -122,7 +122,7 @@ function setupRepeater() {
 
         // External link — show only if present
         if (itemData.externalLink) {
-            $item("#eventLink").label = "Details & Registration →";
+            $item("#eventLink").text = "Details & Registration →";
             $item("#eventLink").link = itemData.externalLink;
             $item("#eventLink").target = "_blank";
             $item("#eventLink").show();
