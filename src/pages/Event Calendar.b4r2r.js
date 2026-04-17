@@ -123,8 +123,9 @@ function setupRepeater() {
         // External link — show only if present
         if (itemData.externalLink) {
             $item("#eventLink").text = "Details & Registration →";
-            $item("#eventLink").link = itemData.externalLink;
-            $item("#eventLink").target = "_blank";
+            $item("#eventLink").onClick(() => {
+                wixLocation.to(itemData.externalLink);
+            });
             $item("#eventLink").show();
         } else {
             $item("#eventLink").hide();
